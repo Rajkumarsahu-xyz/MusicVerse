@@ -1,69 +1,67 @@
-import React, { useEffect, useRef, useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { dataApi } from '../data';
-import { FaPlay, FaPause } from 'react-icons/fa';
+import { usePlayback } from './../PlaybackContext';
+import { FaPause, FaPlay } from 'react-icons/fa';
 
-function SongsComponent() {
-    const [songs, setSongs] = useState([]);
-    const [playingSong, setPlayingSong] = useState(null);
-    const audioRef = useRef({});
+const SongsComponent = () => {
+  const { isPlaying, currentAudioUrl, currentSong, setCurrentSong, playPauseToggle } = usePlayback();
+  const [songs, setSongs] = useState([]);
 
-    const handlePlayPause = (songId) => {
-        console.log(songId, playingSong)
-        const audio = audioRef.current[songId];
+  const togglePlay = (audioUrl, title, artistId, imgUrl, songId) => {
+    setCurrentSong({ title, artistId, imgUrl, songId });
+    playPauseToggle(audioUrl, title, artistId, imgUrl, songId);
+    console.log(currentSong);
+  };
 
-        if (playingSong === songId) {
-          if (audio.paused) {
-            audio.play();
-          } else {
-            audio.pause();
-            setPlayingSong(null);
-          }
-        } else {
-          if (playingSong !== null) {
-            audioRef.current[playingSong].pause();
-          }
-          audio.play();
-          setPlayingSong(songId);
-        }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log(isPlaying);
+        const songsData = await dataApi.fetchSongs();
+        const filteredSongsData = songsData.slice(0, 4);
+        setSongs(filteredSongsData);
+        // console.log(filteredSongsData);
+
+        await Promise.all(filteredSongsData.map(async (song) => {
+          const album = await dataApi.getAlbumById(song.albumId);
+          song.coverImageUrl = album.coverImageUrl;
+          setSongs((prevSongs) => {
+            return prevSongs.map((prevSong) => {
+              if (prevSong.id === song.id) {
+                return { ...prevSong, coverImageUrl: song.coverImageUrl };
+              }
+              return prevSong;
+            });
+          });
+          // console.log(song);
+          return album;
+        }));
+        
+      } catch (error) {
+        console.error('Error fetching data:', error.message);
+      }
     };
 
-    useEffect(() => {
-        let songsData;
-        const fetchData = async () => {
-              songsData = await dataApi.fetchSongs();
-            //   console.log(songsData);
-              const filteredSongs = songsData.slice(0, 4);
-              setSongs(filteredSongs);
-        };
+    fetchData();
+  }, [currentSong]);
 
-        fetchData();
-    }, [])
-
-    return (
-        <div className='songsContainer'>
-            <h2>Songs</h2>
-
-            <div className='songsItems'>
-                {
-                    songs.map((song) => (
-                        <div key={song.id} className='songCard'>
-                            <h4>{song.title}</h4>
-                            <div>
-                                {playingSong === song.id ? (
-                                    <FaPause className='playPauseButton' onClick={() => handlePlayPause(song.id)} />
-                                ) : (
-                                    <FaPlay className='playPauseButton' onClick={() => handlePlayPause(song.id)} />
-                                )}
-                            </div>
-                            <audio  controls={false} autoPlay={playingSong === song.id} ref={(audio) => (audioRef.current[song.id] = audio)} onEnded={() => setPlayingSong(null)}>
-                                <source src={song.url} type='audio/mp3'/>
-                            </audio>
-                        </div>
-                    ))
-                }
+  return (
+    <div className='songsContainer'>
+      <h2>Songs</h2>
+      <div className='songsItems'>
+        {songs.map((song, index) => (
+          <div key={index} className='songCard'>
+            <img src={song.coverImageUrl} alt={`Song ${index + 1}`} />
+            <h4>{song.title}</h4>
+            <div onClick={() => togglePlay(song.url, song.title, song.artistId, song.coverImageUrl, song.id)}>
+              {isPlaying && currentSong.songId === song.id ? <FaPause className="playPauseButton"/> : <FaPlay className="playPauseButton"/>}
             </div>
-        </div>
-    );
-}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export default SongsComponent;

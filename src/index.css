@@ -40,6 +40,21 @@ code {
   width: 11.5vw;
   height: 31vh;
   background: linear-gradient(135deg, #b53186, #ad4aa8);
+  cursor: pointer;
+}
+
+.songCard {
+  position: relative;
+  transition: opacity 0.3s ease;
+}
+
+.songCard:hover {
+  opacity: 0.65;
+}
+
+.songCard > img {
+  width: 11.5vw;
+  height: 24vh;
 }
 
 .artistImg, .albumImg {
@@ -50,11 +65,11 @@ code {
 .createAlbumContainer {
   width: 50vw;
   margin: auto;
-  padding: 10vh 1vw;
-  padding-bottom: 30vh;
+  padding: 15vh 1vw;
+  padding-bottom: 45vh;
   background-color: #81357d;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .inputContainer {
@@ -88,6 +103,52 @@ button:hover {
   background-color: #128c7e; /* Darker shade on hover */
 }
 
+.albumDetailsContainer {
+  width: 50vw;
+  margin: auto;
+  padding: 2vh 1vw;
+  padding-bottom: 20vh;
+  background-color: #81357d;
+}
+
+.albumDetailsContainer > img {
+  width: 30vw;
+  height: 60vh;
+}
+
+.addSongContainer {
+  margin: 10vh;
+}
+
+.songsListContainer {
+  margin: 5vh 2vw;
+}
+
+.songsListContainer > ul > li {
+  list-style-type: none;
+}
+
+.songsListContainer > ul {
+  padding: 0;
+}
+
+.songCardsInAlbum {
+  background: linear-gradient(135deg, #b53186, #ad4aa8);
+  width: 40%;
+  margin: 2vh auto;
+  padding: 2vh 1vw;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 1rem;
+}
+
+.songCardsInAlbum > h3 {
+  display: inline;
+}
+
+.songCardsInAlbum > button {
+  margin: 1vh;
+}
 
 .playbarContainer {
   background: linear-gradient(to right, #FF8C8C, #7C7CFF);
@@ -96,25 +157,73 @@ button:hover {
   height: 10vh;
   width: 100vw;
   padding: 1vh;
+  display: flex;
+  /* justify-content: space-between; */
+  gap: 7vw;
+}
+
+.songDetails {
+  width: 17vw;
+}
+
+.currentPlayingSongImage {
+  height: 9vh;
+  width: 4.5vw;
+  padding: 0.5vh;
+}
+.songDetails > div {
+  display: flex;
+}
+
+.audioControllers {
+  padding-right: 3vw;
+}
+
+.progress-container {
+  margin: auto;
+  display: flex;
+  width: 50vw;
+  padding-right: 1.6vw;
 }
 
 .progressBar {
   background: #ddd; 
   height: 0.9vh; 
   border-radius: 1rem;
-  width: 50%;
+  width: 40vw;
   margin: 1vh auto 0 auto;
   position: relative;
+  cursor: pointer;
 }
 
-.progress {
-  background: #6B6BFF; 
+#progress {
+  height: 1vh;
+  width: 0;
   border-radius: 1rem;
-  height: 100%;
-  width: 0; 
+  background: #6B6BFF; 
+  position: absolute;
+}
+
+.current-time, .duration {
+  padding: 0.5vh;
 }
 
 .playPauseButton {
+  font-size: 1.5vw;
+  cursor: pointer;
+  padding: 1.5vh;
+  display: none;
+  position: absolute;
+  top: 12vh;
+  left: 4.2vw;
+}
+
+.songCard:hover .playPauseButton {
+  display: block;
+  opacity: 1;
+}
+
+.playbarPlay, .playbarPause {
   font-size: 1.5vw;
   cursor: pointer;
   padding: 1.5vh;
@@ -122,4 +231,43 @@ button:hover {
 
 option {
   width: 40vw;
+}
+
+.artistDetailsContainer {
+  width: 50vw;
+  margin: auto;
+  padding: 2vh 1vw;
+  padding-bottom: 20vh;
+  background-color: #81357d;
+}
+
+.artistDetailsContainer > img {
+  width: 30vw;
+  height: 60vh;
+}
+
+.albumsListContainer {
+  width: 40vw;
+  margin: 5vh 2vw;
+  margin: auto;
+}
+
+.albumCardsForArtist {
+  background: linear-gradient(135deg, #b53186, #ad4aa8);
+  width: 80%;
+  margin: 2vh auto;
+  padding: 2vh 1vw;
+  display: flex;
+  /* justify-content: space-between; */
+  gap: 7vw;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.createPlaylistContainer {
+  background-color: #81357d;
+  width: 50vw;
+  margin: auto;
+  padding: 15vh 2vw;
+  padding-bottom: 50vh;
 }

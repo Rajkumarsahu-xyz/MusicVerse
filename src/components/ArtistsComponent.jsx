@@ -1,9 +1,15 @@
 
 import React, { useEffect, useState } from 'react';
 import { dataApi } from '../data';
+import { useNavigate } from 'react-router-dom';
 
 function ArtistsComponent() {
     const [artists, setArtists] = useState([]);
+    const navigate = useNavigate();
+
+    function handleArtistCardClick(artistId) {
+        navigate(`/artist/${artistId}`);
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -23,7 +29,7 @@ function ArtistsComponent() {
             <div className='artistsItems'>
                 {
                     artists.map((artist) => (
-                        <div key={artist.id} className='artistCard'>
+                        <div key={artist.id} className='artistCard' onClick={()  => handleArtistCardClick(artist.id)}>
                             <img className='artistImg' src={artist.coverImageUrl} alt="" />
                             <h4>{artist.displayName}</h4>
                         </div>

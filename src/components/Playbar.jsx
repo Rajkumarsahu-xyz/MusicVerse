@@ -1,68 +1,108 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { dataApi } from '../data';
-import { FaPlay, FaPause } from 'react-icons/fa';
+import { MdSkipPrevious, MdSkipNext } from 'react-icons/md';
+import { FaPlay } from "react-icons/fa";
+import { FaPause } from "react-icons/fa";
+import { HiOutlineQueueList } from 'react-icons/hi2';
+import { usePlayback } from './../PlaybackContext';
+import Like from './Like';
 
 function Playbar() {
-  const [playingSong, setPlayingSong] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const { isPlaying, currentAudioUrl, currentSong, setCurrentSong, playPauseToggle } = usePlayback();
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const audioRef = useRef();
+  const [isLiked, setIsLiked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handlePlayPause = () => {
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
+  const audioRef = useRef(null);
+  const progressBarRef = useRef(null);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    if (!audioRef.current) return;
+
+    const updateProgress = () => {
+      const percentage = (audioRef.current.currentTime / audioRef.current.duration) * 100;
+      progressBarRef.current.style.width = `${percentage}%`;
+      setCurrentTime(audioRef.current.currentTime);
+    };
+    
+
+    audioRef.current.addEventListener('timeupdate', updateProgress);
+
+    return () => {
+      audioRef.current.removeEventListener('timeupdate', updateProgress);
+    };
+  }, [currentSong]);
+  
+  
+
+  const handleProgressBarClick = (e) => {
+    if (!isPlaying) {
+      return;
     }
-    setIsPlaying(!isPlaying);
+    const progressBar = document.getElementById('progressBar');
+
+    const newTime = ((e.nativeEvent.offsetX/progressBar.getBoundingClientRect().width)*duration);
+    audioRef.current.currentTime = newTime;
+    setCurrentTime(newTime);
+  };
+
+  const formatTime = (timeInSeconds) => {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = Math.floor(timeInSeconds % 60);
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  };
+
+  const togglePlay = () => {
+    console.log(currentSong);
+    playPauseToggle(currentAudioUrl, currentSong.title, currentSong.artistId, currentSong.imgUrl, currentSong.songId);
   };
 
   const handleTimeUpdate = () => {
-    setCurrentTime(audioRef.current.currentTime);
-  };
-
-  const handleDurationChange = () => {
     setDuration(audioRef.current.duration);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const songsData = await dataApi.fetchSongs();
-      setPlayingSong(songsData[0]);
-    };
-
-    fetchData();
-  }, []);
+  const handleLikeClick = () => {
+   
+  };
 
   return (
-    <div className="playbarContainer">
-      <div className="playbarContent">
-        <div className="songInfo">
-          {/* <h4>{playingSong?.title}</h4> */}
-          <audio
-            ref={audioRef}
-            src={playingSong?.url}
-            onTimeUpdate={handleTimeUpdate}
-            onDurationChange={handleDurationChange}
-            onEnded={() => {
-              setPlayingSong(null);
-              setIsPlaying(false);
-              setCurrentTime(0);
-            }}
-          />
-        </div>
-        <div className="playControls">
-          <div className="playPauseButton" onClick={handlePlayPause}>
-            {isPlaying ? <FaPause /> : <FaPlay />}
+    <div className='playbarContainer'>
+      <div className='songDetails'>
+        {currentSong && (
+          <div>
+            <img src={currentSong.imgUrl} alt='Album Cover' className='currentPlayingSongImage'/>
+            <div>
+              <h3>{currentSong.title}</h3>
+              <p>{currentSong.artistId}</p>
+            </div>
           </div>
-          <div className="progressBar">
-            <div
-              className="progress"
-              style={{ width: `${(currentTime / duration) * 100}%` }}
-            ></div>
+        )}
+        {!isLoading && isPlaying && <Like isLiked={isLiked} onClick={handleLikeClick} />}
+      </div>
+
+      <div className='audioPlayer'>
+        <div className='audioControllers'>
+          {/* <MdSkipPrevious className='prevSong' /> */}
+          <div onClick={togglePlay}>
+            {isPlaying ? <FaPause className='playbarPlay' /> : <FaPlay className='playbarPause' />}
           </div>
+          {/* <MdSkipNext className='nextSong' /> */}
         </div>
+
+        <div className="progress-container" >
+          <span className="current-time">{formatTime(currentTime)}</span>
+          {<audio ref={audioRef} id='audio-element' src={currentAudioUrl} autoPlay={isPlaying} onTimeUpdate={handleTimeUpdate} ></audio>}
+          <div className="progressBar" id="progressBar" onClick={handleProgressBarClick}>
+            <div id='progress' ref={progressBarRef}></div>
+          </div>
+          <span className="duration">{(duration) ? formatTime(duration) : formatTime(0)}</span>
+        </div>
+      </div>
+
+      <div className='queueBtnDiv'>
+        {/* <HiOutlineQueueList className='queueBtn' /> */}
       </div>
     </div>
   );

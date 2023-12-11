@@ -111,10 +111,11 @@ function delay(ms) {
       localStorage.setItem("data:songs", JSON.stringify(initialSongs));
     }
   
-    async fetchAlbumsByArtistId({ artistId }) {
+    async fetchAlbumsByArtistId(artistId) {
       await delay(500);
       const albums = JSON.parse(localStorage.getItem("data:albums"));
-      return albums.filter((album) => album.artistId === artistId);
+      const artistAlbums = albums.filter((album) => album.artistId == artistId);
+      return artistAlbums;
     }
   
     
@@ -151,16 +152,34 @@ function delay(ms) {
         title: title,
         artistId: artistId,
         coverImageUrl: coverImageUrl,
+        songs: [],
       };
       albums.push(album);
       localStorage.setItem("data:albums", JSON.stringify(albums));
       return album;
     }
 
+    async getAlbumById(albumId) {
+      await delay(500);
+      const albums = JSON.parse(localStorage.getItem("data:albums")) || [];
+      const album = albums.filter((album) => album.id === albumId);
+      // console.log(albums);
+      return album[0];
+    }
+
+    async getArtistById(artistId) {
+      await delay(500);
+      const artists = JSON.parse(localStorage.getItem("data:artists")) || [];
+      const artist = artists.filter((artist) => artist.id == artistId);
+      return artist[0];
+    }
+
     async addSongsToAlbum({ albumId, songTitle, songUrl }) {
       await delay(500);
       const songs = JSON.parse(localStorage.getItem("data:songs")) || [];
-      
+      const albums = JSON.parse(localStorage.getItem("data:albums")) || [];
+      const albumIndex = albums.findIndex((album) => album.id === albumId);
+
       const newSong = {
         id: generateUuid(),
         title: songTitle,
@@ -169,8 +188,14 @@ function delay(ms) {
         url: songUrl,
       };
 
+      if (!albums[albumIndex].songs) {
+        albums[albumIndex].songs = [];
+      }
+
+      albums[albumIndex].songs = [...albums[albumIndex].songs, newSong];
       songs.push(newSong);
       localStorage.setItem("data:songs", JSON.stringify(songs));
+      localStorage.setItem("data:albums", JSON.stringify(albums));
       return newSong;
     }
 
@@ -194,14 +219,22 @@ function delay(ms) {
     async addSongsToPlaylist({ playlistId, songIds }) {
       await delay(500);
       const playlists = JSON.parse(localStorage.getItem("data:playlists")) || [];
-      console.log(playlists);
+      // console.log(playlists);
       const playlistIndex = playlists.findIndex((playlist) => playlist.id === playlistId);
-      console.log(playlistIndex);
+      // console.log(playlistIndex);
 
       playlists[playlistIndex].songIds = [...playlists[playlistIndex].songIds, ...songIds];
       
       localStorage.setItem("data:playlists", JSON.stringify(playlists));
       return playlists[playlistIndex];
+    }
+
+    async getSongUrl(songId) {
+      await delay(500);
+      const songs = JSON.parse(localStorage.getItem("data:songs")) || [];
+      const songIndex = songs.findIndex((song) => song.id === songId);
+      // console.log(songs[songIndex].url);
+      return songs[songIndex].url;
     }
 
   }
