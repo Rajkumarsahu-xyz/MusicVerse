@@ -1,23 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { MdSkipPrevious, MdSkipNext } from 'react-icons/md';
+// import { MdSkipPrevious, MdSkipNext } from 'react-icons/md';
 import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa";
-import { HiOutlineQueueList } from 'react-icons/hi2';
+// import { HiOutlineQueueList } from 'react-icons/hi2';
 import { usePlayback } from './../PlaybackContext';
-import Like from './Like';
 
 function Playbar() {
-  const { isPlaying, currentAudioUrl, currentSong, setCurrentSong, playPauseToggle, currentTime, setCurrentTime } = usePlayback();
+  const { isPlaying, currentAudioUrl, currentSong, playPauseToggle, currentTime, setCurrentTime } = usePlayback();
   // const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [isLiked, setIsLiked] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const audioRef = useRef(null);
   const progressBarRef = useRef(null);
 
   useEffect(() => {
-    setIsLoading(true);
 
     if (!audioRef.current) return;
 
@@ -27,13 +23,14 @@ function Playbar() {
       setCurrentTime(audioRef.current.currentTime);
     };
     
+    const cleanupRef = { current: () => {} };
 
     audioRef.current.addEventListener('timeupdate', updateProgress);
 
-    return () => {
+    cleanupRef.current = () => {
       audioRef.current.removeEventListener('timeupdate', updateProgress);
     };
-  }, [currentSong]);
+  }, [currentSong, setCurrentTime]);
   
   
 
@@ -74,9 +71,6 @@ function Playbar() {
     setDuration(audioRef.current.duration);
   };
 
-  const handleLikeClick = () => {
-   
-  };
 
   return (
     <div className='playbarContainer'>
@@ -90,7 +84,6 @@ function Playbar() {
             </div>
           </div>
         )}
-        {!isLoading && isPlaying && <Like isLiked={isLiked} onClick={handleLikeClick} />}
       </div>
 
       <div className='audioPlayer'>

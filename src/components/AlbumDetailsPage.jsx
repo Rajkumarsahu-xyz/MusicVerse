@@ -10,7 +10,7 @@ const AlbumDetailsPage = () => {
   const [songTitle, setSongTitle] = useState('');
   const [songUrl, setSongUrl] = useState('');
 
-  const { isPlaying, currentAudioUrl, currentSong, setCurrentSong, playPauseToggle } = usePlayback();
+  const { isPlaying, currentSong, setCurrentSong, playPauseToggle } = usePlayback();
 
   const handlePlayPause = (audioUrl, title, artist, imgUrl, songId) => {
     setCurrentSong({ title, artist, imgUrl, songId });
@@ -30,7 +30,7 @@ const AlbumDetailsPage = () => {
     };
     fetchAlbum();
     console.log(album);
-  }, [album, currentSong]);
+  }, [album, currentSong, albumId]);
 
   if (!album) {
     return <div>Loading...</div>;

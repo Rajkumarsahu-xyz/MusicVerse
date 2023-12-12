@@ -5,7 +5,7 @@ import { usePlayback } from './../PlaybackContext';
 import { FaPause, FaPlay } from 'react-icons/fa';
 
 const SongsComponent = () => {
-  const { isPlaying, currentAudioUrl, currentSong, setCurrentSong, playPauseToggle } = usePlayback();
+  const { isPlaying, currentSong, setCurrentSong, playPauseToggle } = usePlayback();
   const [songs, setSongs] = useState([]);
 
   const togglePlay = (audioUrl, title, artistId, imgUrl, songId) => {
@@ -17,7 +17,7 @@ const SongsComponent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(isPlaying);
+        // console.log(isPlaying);
         const songsData = await dataApi.fetchSongs();
         const filteredSongsData = songsData.slice(0, 4);
         setSongs(filteredSongsData);

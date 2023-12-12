@@ -114,7 +114,8 @@ function delay(ms) {
     async fetchAlbumsByArtistId(artistId) {
       await delay(500);
       const albums = JSON.parse(localStorage.getItem("data:albums"));
-      const artistAlbums = albums.filter((album) => album.artistId == artistId);
+      // console.log(artistId, albums[0].artistId);
+      const artistAlbums = albums.filter((album) => parseInt(album.artistId) === parseInt(artistId));
       return artistAlbums;
     }
   
@@ -170,7 +171,7 @@ function delay(ms) {
     async getArtistById(artistId) {
       await delay(500);
       const artists = JSON.parse(localStorage.getItem("data:artists")) || [];
-      const artist = artists.filter((artist) => artist.id == artistId);
+      const artist = artists.filter((artist) => parseInt(artist.id) === parseInt(artistId));
       return artist[0];
     }
 
