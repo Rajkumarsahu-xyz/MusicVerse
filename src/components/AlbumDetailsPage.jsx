@@ -29,7 +29,7 @@ const AlbumDetailsPage = () => {
       setAlbum(fetchedAlbum);
     };
     fetchAlbum();
-    console.log(album);
+    // console.log(album);
   }, [album, currentSong, albumId]);
 
   if (!album) {

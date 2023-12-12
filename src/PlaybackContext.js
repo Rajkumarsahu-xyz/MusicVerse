@@ -8,9 +8,9 @@ export const PlaybackProvider = ({ children }) => {
   const [currentSong, setCurrentSong] = useState(null);
   const [currentTime, setCurrentTime] = useState(0);
 
-  const playPauseToggle = (audioUrl, title, artistId, imgUrl, songId, currentTimeforstoring) => {
+  const playPauseToggle = (audioUrl, title, artistId, imgUrl, songId, currentTime) => {
     if (isPlaying && songId === currentSong?.songId) {
-      localStorage.setItem('currentPlayback', JSON.stringify({ currentSong, currentTime:currentTimeforstoring, currentAudioUrl }));
+      // localStorage.setItem('currentPlayback', JSON.stringify({ currentSong, currentTime:currentTimeforstoring, currentAudioUrl }));
       
       // console.log(currentTimeforstoring);
       setIsPlaying(false);
@@ -21,14 +21,14 @@ export const PlaybackProvider = ({ children }) => {
       
     } 
     else {
-      const storedPlayback = JSON.parse(localStorage.getItem('currentPlayback'));
+      // const storedPlayback = JSON.parse(localStorage.getItem('currentPlayback'));
       setIsPlaying(true);
-      // setCurrentAudioUrl(audioUrl);
-      setCurrentSong(storedPlayback?.currentSong || { title, artistId, imgUrl, songId });
+      setCurrentAudioUrl(audioUrl);
+      setCurrentSong({ title, artistId, imgUrl, songId });
       // console.log(currentTimeforstoring);
       
-      setCurrentTime(currentTimeforstoring || 0);
-      setCurrentAudioUrl(storedPlayback?.currentAudioUrl || '');
+      setCurrentTime(currentTime || 0);
+      // setCurrentAudioUrl(storedPlayback?.currentAudioUrl || '');
     }
   };
 

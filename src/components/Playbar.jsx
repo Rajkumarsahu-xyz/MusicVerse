@@ -52,19 +52,7 @@ function Playbar() {
   };
 
   const togglePlay = async() => {
-    const storedPlayback = JSON.parse(localStorage.getItem('currentPlayback'));
-    // console.log(storedPlayback.currentTime);
-    // console.log(currentTime);
-    // console.log(currentAudioUrl);
-    if(storedPlayback && !currentSong) {
-      console.log("raj");
-      playPauseToggle(currentAudioUrl, storedPlayback.currentSong.title, storedPlayback.currentSong.artistId, storedPlayback.currentSong.imgUrl, storedPlayback.currentSong.songId, storedPlayback.currentTime);
-    }
-    // console.log(currentSong);
-
-    else {
       playPauseToggle(currentAudioUrl, currentSong.title, currentSong.artistId, currentSong.imgUrl, currentSong.songId, currentTime);
-    }
   };
 
   const handleTimeUpdate = () => {
