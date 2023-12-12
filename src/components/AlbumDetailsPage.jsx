@@ -62,7 +62,7 @@ const AlbumDetailsPage = () => {
                 <h3>{song.title}</h3>
                 <button
                   onClick={() =>
-                    handlePlayPause(song.url, song.title, song.artist, song.imgUrl, song.id)
+                    handlePlayPause(song.url, song.title, song.artist, album.coverImageUrl, song.id)
                   }
                 >
                   {isPlaying && currentSong.songId === song.id ? <FaPause /> : <FaPlay />}

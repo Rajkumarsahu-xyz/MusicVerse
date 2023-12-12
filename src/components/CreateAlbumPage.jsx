@@ -5,7 +5,7 @@ import { dataApi, userAuthApi } from '../data';
 const CreateAlbumPage = () => {
   const [albumTitle, setAlbumTitle] = useState('');
   const [coverImageUrl, setCoverImageUrl] = useState('');
-  const artistId = userAuthApi.users[1].id;
+  const artistId = userAuthApi.users[2].id;
   
   const navigate = useNavigate();
 

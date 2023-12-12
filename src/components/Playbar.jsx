@@ -7,8 +7,8 @@ import { usePlayback } from './../PlaybackContext';
 import Like from './Like';
 
 function Playbar() {
-  const { isPlaying, currentAudioUrl, currentSong, setCurrentSong, playPauseToggle } = usePlayback();
-  const [currentTime, setCurrentTime] = useState(0);
+  const { isPlaying, currentAudioUrl, currentSong, setCurrentSong, playPauseToggle, currentTime, setCurrentTime } = usePlayback();
+  // const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -54,9 +54,20 @@ function Playbar() {
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   };
 
-  const togglePlay = () => {
-    console.log(currentSong);
-    playPauseToggle(currentAudioUrl, currentSong.title, currentSong.artistId, currentSong.imgUrl, currentSong.songId);
+  const togglePlay = async() => {
+    const storedPlayback = JSON.parse(localStorage.getItem('currentPlayback'));
+    // console.log(storedPlayback.currentTime);
+    // console.log(currentTime);
+    // console.log(currentAudioUrl);
+    if(storedPlayback && !currentSong) {
+      console.log("raj");
+      playPauseToggle(currentAudioUrl, storedPlayback.currentSong.title, storedPlayback.currentSong.artistId, storedPlayback.currentSong.imgUrl, storedPlayback.currentSong.songId, storedPlayback.currentTime);
+    }
+    // console.log(currentSong);
+
+    else {
+      playPauseToggle(currentAudioUrl, currentSong.title, currentSong.artistId, currentSong.imgUrl, currentSong.songId, currentTime);
+    }
   };
 
   const handleTimeUpdate = () => {
@@ -109,3 +120,4 @@ function Playbar() {
 }
 
 export default Playbar;
+

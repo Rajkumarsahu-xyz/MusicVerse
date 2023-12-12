@@ -100,7 +100,7 @@ button {
 }
 
 button:hover {
-  background-color: #128c7e; /* Darker shade on hover */
+  background-color: #128c7e; 
 }
 
 .albumDetailsContainer {

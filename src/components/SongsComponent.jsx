@@ -55,7 +55,7 @@ const SongsComponent = () => {
             <img src={song.coverImageUrl} alt={`Song ${index + 1}`} />
             <h4>{song.title}</h4>
             <div onClick={() => togglePlay(song.url, song.title, song.artistId, song.coverImageUrl, song.id)}>
-              {isPlaying && currentSong.songId === song.id ? <FaPause className="playPauseButton"/> : <FaPlay className="playPauseButton"/>}
+              {(isPlaying && currentSong.songId === song.id) ? <FaPause className="playPauseButton"/> : <FaPlay className="playPauseButton"/>}
             </div>
           </div>
         ))}
