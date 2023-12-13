@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { usePlayback } from '../PlaybackContext';
 import { FaPause, FaPlay } from 'react-icons/fa';
 import { db, storage } from '../Firebase';
-import { addDoc, collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 
 const AlbumDetailsPage = () => {
@@ -124,43 +124,6 @@ const AlbumDetailsPage = () => {
     return newSongRef;  
   }
 
-  const updateArtistWithAlbum = async (artistId, artistName, albumId, artistGenre) => {
-    const artistDocRef = doc(db, 'artists', artistId);
-    console.log(artistDocRef);
-  
-    try {
-      // Retrieve existing artist data
-      const artistDoc = await getDoc(artistDocRef);
-      console.log(artistDoc);
-      const artist = artistDoc.data();
-
-      console.log(artist);
-
-      if(!artist) {
-        await setDoc(artistDocRef, {
-          name: artistName,
-          Album: [albumId],
-          genre: artistGenre,
-        });
-      }
-  
-      // Add album_id to the artist's data
-      else {
-        const updatedAlbums = [...(artist.Album || []), albumId];
-        console.log(updatedAlbums);
-        await setDoc(artistDocRef, {
-          name: artistName,
-          Album: updatedAlbums,
-          genre: artistGenre,
-          // Add any other fields you may have in the artist document
-        });
-      }
-
-    } catch (error) {
-      console.error('Error updating artist with album:', error.message);
-    }
-  };
-
   const handleAddSong = async () => {
     if (!songTitle || !songUrl || !songGenre || !songTagName) {
       return;
@@ -173,8 +136,6 @@ const AlbumDetailsPage = () => {
       songTagName,
       songUrl,
     });
-
-    await updateArtistWithAlbum(albumId, album.artist_id, albumId, songGenre);
   
     setSongTitle('');
     setSongUrl('');
