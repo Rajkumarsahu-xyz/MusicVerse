@@ -66,7 +66,7 @@ function Playbar() {
         {currentSong && (
           <div>
             <img src={currentSong.imgUrl} alt='Album Cover' className='currentPlayingSongImage'/>
-            <div>
+            <div className='songNameNArtist'>
               <h3>{currentSong.title}</h3>
               <p>{currentSong.artistId}</p>
             </div>
