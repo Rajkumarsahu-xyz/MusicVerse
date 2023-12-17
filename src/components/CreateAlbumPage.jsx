@@ -1,48 +1,5 @@
-// import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import { dataApi, userAuthApi } from '../data';
-
-// const CreateAlbumPage = () => {
-//   const [albumTitle, setAlbumTitle] = useState('');
-//   const [coverImageUrl, setCoverImageUrl] = useState('');
-//   const artistId = userAuthApi.users[2].id;
-  
-//   const navigate = useNavigate();
-
-//   const handleCreateAlbum = async () => {
-//     const album = await dataApi.createAlbum({ title: albumTitle, artistId, coverImageUrl });
-//     setAlbumTitle('');
-//     setCoverImageUrl('');
-
-//     navigate(`/album/${album.id}`);
-//   };
-
-//   return (
-//     <div className='createAlbumContainer'>
-//       <h1>Create New Album</h1>
-//       <div className="inputContainer">
-//         <label> Album Title : </label>
-//         <input type="text" value={albumTitle} onChange={(e) => setAlbumTitle(e.target.value)} />
-//         <label> Album Cover Image URL : </label>
-//         <input type="text" value={coverImageUrl} onChange={(e) => setCoverImageUrl(e.target.value)} />
-//       </div>
-//       <div className="buttonContainer">
-//         <button onClick={handleCreateAlbum}>Create Album</button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default CreateAlbumPage;
-
-
-
-
-
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { dataApi, userAuthApi } from '../data';
 import { auth, db, storage } from '../Firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
@@ -55,7 +12,6 @@ const CreateAlbumPage = () => {
   const navigate = useNavigate();
 
   const handleImageChange = (e) => {
-    // Handle image selection
     const file = e.target.files[0];
     setCoverImage(file);
   };
@@ -65,7 +21,6 @@ const CreateAlbumPage = () => {
     console.log(artistDocRef);
   
     try {
-      // Retrieve existing artist data
       const artistDoc = await getDoc(artistDocRef);
       console.log(artistDoc);
       const artist = artistDoc.data();
@@ -114,17 +69,15 @@ const CreateAlbumPage = () => {
 
           const { uid, displayName } = auth.currentUser || {};
           const artistId = uid;
-          // console.log(artistId, displayName);
 
           const newAlbumRef = await addDoc(albumsRef, {
             artist_id: artistId,
-            coverImageUrl: downloadUrl,
+            coverImageUrl: coverImageUrl,
             title: albumTitle,
             songs: [],
           });
 
           await updateArtistWithAlbum(artistId, displayName, newAlbumRef.id);
-
 
           navigate(`/album/${newAlbumRef.id}`);
         }

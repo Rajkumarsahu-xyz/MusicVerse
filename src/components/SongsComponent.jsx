@@ -1,6 +1,4 @@
-
 import React, { useState, useEffect } from 'react';
-// import { dataApi } from '../data';
 import { usePlayback } from './../PlaybackContext';
 import { FaPause, FaPlay } from 'react-icons/fa';
 import { collection, getDocs, query, doc, getDoc } from 'firebase/firestore';
@@ -15,39 +13,6 @@ const SongsComponent = () => {
     playPauseToggle(audioUrl, title, artistId, imgUrl, songId);
     console.log(currentSong);
   };
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       // console.log(isPlaying);
-  //       const songsData = await dataApi.fetchSongs();
-  //       const filteredSongsData = songsData.slice(0, 4);
-  //       setSongs(filteredSongsData);
-  //       // console.log(filteredSongsData);
-
-  //       await Promise.all(filteredSongsData.map(async (song) => {
-  //         const album = await dataApi.getAlbumById(song.albumId);
-  //         song.coverImageUrl = album.coverImageUrl;
-  //         setSongs((prevSongs) => {
-  //           return prevSongs.map((prevSong) => {
-  //             if (prevSong.id === song.id) {
-  //               return { ...prevSong, coverImageUrl: song.coverImageUrl };
-  //             }
-  //             return prevSong;
-  //           });
-  //         });
-  //         // console.log(song);
-  //         return album;
-  //       }));
-        
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error.message);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [currentSong]);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -97,7 +62,7 @@ const SongsComponent = () => {
     };
 
     fetchData();
-  }, []);
+  }, [songs]);
 
   return (
     <div className='songsContainer'>

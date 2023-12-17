@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaSpotify } from 'react-icons/fa';
+import { BsMusicNoteList } from "react-icons/bs";
 import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import SignInOut from '../SignInOut';
@@ -28,8 +28,8 @@ function TopHeader() {
                 <MdArrowForwardIos className="arrowheads" onClick={goForward}/>
             </div>
             <div className='logo'>
-                <FaSpotify className='spotifyLogo' onClick={handleLogoClick}/>
-                <h1 onClick={handleLogoClick}>Spotify</h1>
+                <BsMusicNoteList className='spotifyLogo' onClick={handleLogoClick}/>
+                <h1 onClick={handleLogoClick}>MusicVerse</h1>
             </div>
             <SignInOut/>
             <div className='loginMsg'>

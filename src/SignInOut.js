@@ -12,7 +12,7 @@ const SignInOut = () => {
       await signInWithPopup(auth, googleProvider);
       toast.success('Signed in successfully!', {
         position: 'top-right',
-        autoClose: 3000, // Close the toast after 3 seconds
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -28,7 +28,7 @@ const SignInOut = () => {
       await signOut(auth);
       toast.success('Signed out successfully!', {
         position: 'top-right',
-        autoClose: 3000, // Close the toast after 3 seconds
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

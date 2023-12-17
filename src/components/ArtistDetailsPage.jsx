@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-// import { dataApi } from '../data';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../Firebase';
 import { doc, getDoc } from 'firebase/firestore';
@@ -8,28 +7,11 @@ import { doc, getDoc } from 'firebase/firestore';
 const ArtistDetailsPage = () => {
   const { artistId } = useParams();
   const [artist, setArtist] = useState(null);
-  // const [albums, setAlbums] = useState([]);
   const navigate = useNavigate();
 
   function handleAlbumCardClick(albumId) {
     navigate(`/album/${albumId}`);
   }
-
-  // useEffect(() => {
-  //   const fetchArtistDetails = async () => {
-  //     try {
-  //       const fetchedArtist = await dataApi.getArtistById(artistId);
-  //       setArtist(fetchedArtist);
-
-  //       const artistAlbums = await dataApi.fetchAlbumsByArtistId(artistId);
-  //       setAlbums(artistAlbums);
-  //     } catch (error) {
-  //       console.error('Error fetching artist details:', error.message);
-  //     }
-  //   };
-
-  //   fetchArtistDetails();
-  // }, [artistId]);
 
   useEffect(() => {
     const fetchArtistDetails = async () => {

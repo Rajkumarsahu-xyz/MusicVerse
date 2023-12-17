@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-// import { dataApi } from '../data';
 import { usePlayback } from '../PlaybackContext';
 import { FaPause, FaPlay } from 'react-icons/fa';
 import { db, storage } from '../Firebase';
@@ -21,21 +20,6 @@ const AlbumDetailsPage = () => {
     setCurrentSong({ title, artist, imgUrl, songId });
     playPauseToggle(audioUrl, title, artist, imgUrl, songId);
   };
-
-  // const handleAddSong = async () => {
-  //   await dataApi.addSongsToAlbum({ albumId: album.id, songTitle, songUrl });
-  //   setSongTitle('');
-  //   setSongUrl('');
-  // };
-
-  // useEffect(() => {
-  //   const fetchAlbum = async () => {
-  //     const fetchedAlbum = await dataApi.getAlbumById(albumId);
-  //     setAlbum(fetchedAlbum);
-  //   };
-  //   fetchAlbum();
-  //   // console.log(album);
-  // }, [album, currentSong, albumId]);
 
   useEffect(() => {
     const fetchAlbumDetails = async () => {
@@ -65,24 +49,19 @@ const AlbumDetailsPage = () => {
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     
-    // Create a storage reference
     const storageRef = ref(storage, `Songs/${file.name}`);
     
-    // Upload file
     const uploadTask = uploadBytesResumable(storageRef, file);
   
     uploadTask.on('state_changed', 
       (snapshot) => {
-        // Handle progress (optional)
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log(`Upload progress: ${progress}%`);
       },
       (error) => {
-        // Handle errors (optional)
         console.error('Error uploading file:', error.message);
       },
       () => {
-        // Handle successful upload
         getDownloadURL(uploadTask.snapshot.ref).then((audioUrl) => {
           console.log('File available at:', audioUrl);
           setSongUrl(audioUrl);
@@ -101,13 +80,11 @@ const AlbumDetailsPage = () => {
       tags: songTagName,
       title: songTitle,
     });
-  
-    // Add the song to the album's songs array
+
     const albumRef = doc(db, 'albums', albumId);
     const albumDoc = await getDoc(albumRef);
     const existingSongs = albumDoc.data().songs || [];
 
-    // Append the new song details to the existing songs array
     const updatedSongs = [...existingSongs, {
       id: newSongRef.id,
       audioUrl: songUrl,
@@ -116,7 +93,6 @@ const AlbumDetailsPage = () => {
       name: songTitle,
     }];
 
-    // Update the "songs" array in the album document
     await updateDoc(albumRef, {
       songs: updatedSongs,
     });
@@ -151,17 +127,11 @@ const AlbumDetailsPage = () => {
 
   return (
     <div className='albumDetailsContainer'>
-      <h1>{album.title}</h1>
+      <h1>{album.title} - {album.artistName}</h1>
       <img src={album.coverImageUrl} alt={album.title} />
 
       <div className="addSongContainer">
         <h3>Add Songs To The Album</h3>
-        {/* <div className="inputContainer">
-          <label>Song Title:</label>
-          <input type="text" value={songTitle} onChange={(e) => setSongTitle(e.target.value)} />
-          <label>Song Url:</label>
-          <input type="text" value={songUrl} onChange={(e) => setSongUrl(e.target.value)} />
-        </div> */}
         <div className="inputContainer">
           <label>Song Title:</label>
           <input type="text" value={songTitle} onChange={(e) => setSongTitle(e.target.value)} />

@@ -1,37 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { dataApi, userAuthApi } from '../data';
+import { useNavigate } from 'react-router-dom';
+import { auth, db } from '../Firebase';
+import { addDoc, collection } from 'firebase/firestore';
 
 const CreatePlaylistPage = () => {
   const [playlistTitle, setPlaylistTitle] = useState('');
-  const [selectedSongs, setSelectedSongs] = useState([]);
-  const [playlist, setPlaylist] = useState([]);
-  const [songs, setSongs] = useState([]);
-  const userId = userAuthApi.users[1].id;
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const playlistsData = await dataApi.fetchPlaylists();
-      setPlaylist(playlistsData);
-
-      const songsData = await dataApi.fetchSongs();
-      setSongs(songsData);
-    };
-
-    fetchData();
   }, []);
 
   const handleCreatePlaylist = async () => {
-    setPlaylist(await dataApi.createPlaylist({ title: playlistTitle, userId }));
-    // setPlaylists([...playlists, newPlaylist]);
-    setPlaylistTitle('');
-  };
+    const { uid, displayName } = auth.currentUser || {};
+    const playlistsRef = collection(db, 'playlists');
+    const newPlaylistDoc = await addDoc(playlistsRef, {
+      title: playlistTitle,
+      songs: [],
+      createdBy: {
+        userId: uid,
+        username: displayName,
+      },
+    });
 
-  const handleAddToPlaylist = async () => {
-    console.log(selectedSongs[0].id);
-    const selectedSongIds = selectedSongs.map(song => song.id);
-    console.log(selectedSongIds);
-    await dataApi.addSongsToPlaylist({ playlistId: playlist.id, songIds: selectedSongIds });
-    setSelectedSongs([]);
+    const newPlaylistId = newPlaylistDoc.id;
+    setPlaylistTitle('');
+    navigate(`/playlist/${newPlaylistId}`);
   };
 
   return (
@@ -43,30 +36,6 @@ const CreatePlaylistPage = () => {
       </div>
       <div className="buttonContainer">
         <button onClick={handleCreatePlaylist}>Create Playlist</button>
-      </div>
-
-      <div className="addSongContainer">
-        <h3>Add Songs To The Playlist</h3>
-        <div className="inputContainer">
-          <label>Select Songs:</label>
-          <select
-            multiple
-            value={selectedSongs.map(song => song.id)}
-            onChange={(e) => {
-              const selectedIds = Array.from(e.target.selectedOptions, option => option.value);
-            //   console.log(songs);
-              const selectedSongs = songs.filter(song => selectedIds.includes(song.id));
-              setSelectedSongs(selectedSongs);
-            }}
-          >
-            {songs.map(song => (
-              <option key={song.id} value={song.id}>{song.title}</option>
-            ))}
-          </select>
-        </div>
-        <div className="buttonContainer">
-          <button onClick={handleAddToPlaylist}>Add to Playlist</button>
-        </div>
       </div>
     </div>
   );
