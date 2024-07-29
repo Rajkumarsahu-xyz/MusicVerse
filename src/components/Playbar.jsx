@@ -109,7 +109,8 @@ function Playbar() {
       if(!isPlaying) {
         return;
       }
-      playPauseToggle(currentAudioUrl, currentSong.title, currentSong.artistId, currentSong.imgUrl, currentSong.songId, currentTime);
+      console.log(currentSong.artistId);
+      playPauseToggle(currentAudioUrl, currentSong.title, currentSong.artistId, currentSong.imgUrl, currentSong.songId, currentSong.artistName, currentTime);
   };
 
   const handleTimeUpdate = () => {
@@ -120,21 +121,21 @@ function Playbar() {
   return (
     <div className='playbarContainer'>
       <div className='songDetails'>
-        {currentSong && (
+        {currentSong && 
           <div>
             <img src={currentSong.imgUrl} alt='Album Cover' className='currentPlayingSongImage'/>
             <div className='songNameNArtist'>
               <h3>{currentSong.title}</h3>
-              <p>{currentSong.artistId}</p>
+              <p>{currentSong.artistName}</p>
             </div>
           </div>
-        )}
+        }
         {!isLoading && isPlaying && <Like isLiked={isLiked} onClick={handleLikeClick} />}
       </div>
 
       <div className='audioPlayer'>
         <div className='audioControllers'>
-          <div onClick={togglePlay}>
+          <div className='audioButton' onClick={togglePlay}>
             {isPlaying ? <FaPause className='playbarPlay' /> : <FaPlay className='playbarPause' />}
           </div>
         </div>

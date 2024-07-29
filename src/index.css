@@ -7,6 +7,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: whitesmoke;
+  /* background: linear-gradient(135deg, #FF6381, #5A52CC); */
 }
 
 code {
@@ -16,6 +17,8 @@ code {
 
 .LandingPageContainer {
   background: linear-gradient(135deg, #FF6381, #5A52CC);
+  /* background: linear-gradient(210deg, #FF6381, #5A52CC); */
+
 }
 
 .topHeaderContainer {
@@ -82,9 +85,11 @@ code {
 .loginMsg {
   text-align: center;
   width: 100%;
+  font-size: 70%;
 }
 
 .homeContainer {
+  /* height: 100vh; */
   width: 50vw;
   background-color: #81357d;
   margin: auto;
@@ -266,11 +271,19 @@ button:hover {
 }
 
 .songNameNArtist {
-  padding: 1vh;
+  /* height: 9vh;
+  width: 28.5vh; */
+  padding: 1vh 0 0 0.5vw;
+  
 }
 
 .audioControllers {
   padding-right: 3vw;
+}
+
+.audioButton {
+  width: 40px;
+  margin: auto;
 }
 
 .progress-container {
@@ -510,6 +523,16 @@ option {
   text-align: left;
 }
 
+.noPlaylists {
+  margin-left: 1.5vw;
+  text-align: left;
+}
+
+.noAlbums {
+  margin-left: 1.5vw;
+  text-align: left;
+}
+
 .libraryPlaylistsContainer > p:hover {
   background-color: #fa7690;
 }
@@ -537,11 +560,13 @@ option {
 }
 
 .addSongsToPlaylist > .songsList {
+  height: 45vh;
   width: 30vw;
   padding: 0;
 }
 
 .songsList select {
+  height: 90%;
   margin-bottom: 20px;
   width: 100%;
   padding: 0 0.5vw;

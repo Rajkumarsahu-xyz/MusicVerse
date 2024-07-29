@@ -19,8 +19,8 @@ function AlbumsComponent() {
           const albumsData = albumsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
           const limitedAlbums = albumsData.slice(0, 4);
     
-          console.log(limitedAlbums);
           setAlbums(limitedAlbums);
+          console.log(limitedAlbums);
         };
     
         fetchAlbums();

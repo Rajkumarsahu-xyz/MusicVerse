@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { usePlayback } from '../PlaybackContext';
 import { FaPause, FaPlay } from 'react-icons/fa';
-import { db, storage } from '../Firebase';
+import { db, storage, auth } from '../Firebase';
 import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 
@@ -13,12 +13,13 @@ const AlbumDetailsPage = () => {
   const [songUrl, setSongUrl] = useState('');
   const [songGenre, setSongGenre] = useState('');
   const [songTagName, setSongTagName] = useState('');
+  const [currentUserId, setCurrentUserId] = useState(null);
 
   const { isPlaying, currentSong, setCurrentSong, playPauseToggle } = usePlayback();
 
-  const handlePlayPause = (audioUrl, title, artist, imgUrl, songId) => {
-    setCurrentSong({ title, artist, imgUrl, songId });
-    playPauseToggle(audioUrl, title, artist, imgUrl, songId);
+  const handlePlayPause = (audioUrl, title, artist, imgUrl, songId, artistName) => {
+    setCurrentSong({ title, artist, imgUrl, songId, artistName });
+    playPauseToggle(audioUrl, title, artist, imgUrl, songId, artistName);
   };
 
   useEffect(() => {
@@ -45,6 +46,13 @@ const AlbumDetailsPage = () => {
     fetchAlbumDetails();
     
   }, [albumId]);
+
+  useEffect(() => {
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      setCurrentUserId(currentUser.uid);
+    }
+  }, []);
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
@@ -96,6 +104,12 @@ const AlbumDetailsPage = () => {
     await updateDoc(albumRef, {
       songs: updatedSongs,
     });
+
+    // Update local state with new song
+    setAlbum((prevAlbum) => ({
+      ...prevAlbum,
+      songs: updatedSongs,
+    }));
   
     return newSongRef;  
   }
@@ -119,33 +133,35 @@ const AlbumDetailsPage = () => {
     setSongTagName('');
   };
   
-  
-
   if (!album) {
     return <div>Loading...</div>;
   }
 
+  const isAlbumCreator = album.artist_id === currentUserId;
+
   return (
     <div className='albumDetailsContainer'>
-      <h1>{album.title} - {album.artistName}</h1>
+      <h1>{album.title} &ensp; - &ensp; {album.artistName}</h1>
       <img src={album.coverImageUrl} alt={album.title} />
 
-      <div className="addSongContainer">
-        <h3>Add Songs To The Album</h3>
-        <div className="inputContainer">
-          <label>Song Title:</label>
-          <input type="text" value={songTitle} onChange={(e) => setSongTitle(e.target.value)} />
-          <label>Song Genre:</label>
-          <input type="text" value={songGenre} onChange={(e) => setSongGenre(e.target.value)} />
-          <label>Song Tag Name:</label>
-          <input type="text" value={songTagName} onChange={(e) => setSongTagName(e.target.value)} />
-          <label>Upload Song:</label>
-          <input type="file" onChange={(e) => handleFileUpload(e)} />
+      {isAlbumCreator && (
+        <div className="addSongContainer">
+          <h3>Add Songs To The Album</h3>
+          <div className="inputContainer">
+            <label>Song Title:</label>
+            <input type="text" value={songTitle} onChange={(e) => setSongTitle(e.target.value)} />
+            <label>Song Genre:</label>
+            <input type="text" value={songGenre} onChange={(e) => setSongGenre(e.target.value)} />
+            <label>Song Tag Name:</label>
+            <input type="text" value={songTagName} onChange={(e) => setSongTagName(e.target.value)} />
+            <label>Upload Song:</label>
+            <input type="file" onChange={(e) => handleFileUpload(e)} />
+          </div>
+          <div className="buttonContainer">
+            <button onClick={handleAddSong}>Add Song</button>
+          </div>
         </div>
-        <div className="buttonContainer">
-          <button onClick={handleAddSong}>Add Song</button>
-        </div>
-      </div>
+      )}
 
       <div className="songsListContainer">
         <h2>Songs</h2>
@@ -155,7 +171,7 @@ const AlbumDetailsPage = () => {
                 <h3>{song.name}</h3>
                 <button
                   onClick={() =>
-                    handlePlayPause(song.audioUrl, song.name, song.artist, album.coverImageUrl, song.id)
+                    handlePlayPause(song.audioUrl, song.name, song.artist, album.coverImageUrl, song.id, album.artistName)
                   }
                 >
                   {(isPlaying && currentSong.songId === song.id) ? <FaPause /> : <FaPlay />}

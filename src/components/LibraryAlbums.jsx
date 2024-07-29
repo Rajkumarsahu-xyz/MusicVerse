@@ -30,13 +30,17 @@ function LibraryAlbums() {
   }, [user]);
 
   return (
-    <div className="libraryPlaylistsContainer">
-      {userAlbums.map((album, index) => (
-        <p key={index} onClick={() => albumClickHandler(album.id)}>
+    (userAlbums.length > 0) ? (
+      <div className="libraryPlaylistsContainer">
+        {userAlbums.map((album, index) => (
+          <p key={index} onClick={() => albumClickHandler(album.id)}>
             {album.title}
-        </p>
-      ))}
-    </div>
+          </p>
+        ))}
+      </div>
+      ) : (
+      <p className="noAlbums">Create an Album of your choice.</p>
+    )
   );
 }
 

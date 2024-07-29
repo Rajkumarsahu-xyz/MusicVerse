@@ -31,6 +31,7 @@ function ArtistsComponent() {
             );
             
           setArtists(artistsData.slice(0,4));
+          console.log(artistsData.slice(0,4));
         };
     
         fetchData();

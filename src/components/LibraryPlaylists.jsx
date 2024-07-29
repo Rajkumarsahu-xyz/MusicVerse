@@ -31,13 +31,17 @@ function LibraryPlaylists() {
   }, [user]);
 
   return (
-    <div className="libraryPlaylistsContainer">
-      {userPlaylists.map((playlist, index) => (
-        <p key={index} onClick={() => playlistClickHandler(playlist.id)}>
-          {playlist.title}
-        </p>
-      ))}
-    </div>
+    (userPlaylists.length > 0) ? (
+      <div className="libraryPlaylistsContainer">
+        {userPlaylists.map((playlist, index) => (
+          <p key={index} onClick={() => playlistClickHandler(playlist.id)}>
+            {playlist.title}
+          </p>
+        ))}
+      </div>
+      ) : (
+      <p className="noPlaylists">Create a Playlist of your choice.</p>
+    )
   );
 }
 

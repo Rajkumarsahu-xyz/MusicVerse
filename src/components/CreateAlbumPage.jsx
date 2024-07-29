@@ -7,7 +7,7 @@ import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
 const CreateAlbumPage = () => {
   const [albumTitle, setAlbumTitle] = useState('');
   const [coverImage, setCoverImage] = useState(null);
-  const [coverImageUrl, setCoverImageUrl] = useState('');
+  // const [coverImageUrl, setCoverImageUrl] = useState('');
   
   const navigate = useNavigate();
 
@@ -64,7 +64,9 @@ const CreateAlbumPage = () => {
         },
         async () => {
           const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
-          setCoverImageUrl(downloadUrl);
+          // console.log(downloadUrl);
+          // setCoverImageUrl(downloadUrl);
+          // console.log(coverImageUrl);
           const albumsRef = collection(db, 'albums');
 
           const { uid, displayName } = auth.currentUser || {};
@@ -72,7 +74,7 @@ const CreateAlbumPage = () => {
 
           const newAlbumRef = await addDoc(albumsRef, {
             artist_id: artistId,
-            coverImageUrl: coverImageUrl,
+            coverImageUrl: downloadUrl,
             title: albumTitle,
             songs: [],
           });

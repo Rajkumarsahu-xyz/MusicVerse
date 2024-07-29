@@ -8,9 +8,9 @@ const SongsComponent = () => {
   const { isPlaying, currentSong, setCurrentSong, playPauseToggle } = usePlayback();
   const [songs, setSongs] = useState([]);
 
-  const togglePlay = (audioUrl, title, artistId, imgUrl, songId) => {
-    setCurrentSong({ title, artistId, imgUrl, songId });
-    playPauseToggle(audioUrl, title, artistId, imgUrl, songId);
+  const togglePlay = (audioUrl, title, artistId, imgUrl, songId, artistName) => {
+    setCurrentSong({ title, artistId, imgUrl, songId, artistName });
+    playPauseToggle(audioUrl, title, artistId, imgUrl, songId, artistName);
     console.log(currentSong);
   };
 
@@ -54,7 +54,7 @@ const SongsComponent = () => {
         const validSongsWithAlbumData = songsWithArtistData.filter((song) => song !== null);
 
         setSongs(validSongsWithAlbumData.slice(0, 4));
-        console.log(songs);
+        console.log(validSongsWithAlbumData.slice(0, 4));
         
       } catch (error) {
         console.error('Error fetching data:', error.message);
@@ -62,7 +62,7 @@ const SongsComponent = () => {
     };
 
     fetchData();
-  }, [songs]);
+  }, []);
 
   return (
     <div className='songsContainer'>
@@ -72,7 +72,7 @@ const SongsComponent = () => {
           <div key={index} className='songCard'>
             <img src={song.imgUrl} alt={`Song ${index + 1}`} />
             <h4>{song.title}</h4>
-            <div onClick={() => togglePlay(song.audioUrl, song.title, song.artistId, song.imgUrl, song.id)}>
+            <div onClick={() => togglePlay(song.audioUrl, song.title, song.artist_id, song.imgUrl, song.id, song.artistName)}>
               {(isPlaying && currentSong.songId === song.id) ? <FaPause className="playPauseButton"/> : <FaPlay className="playPauseButton"/>}
             </div>
           </div>

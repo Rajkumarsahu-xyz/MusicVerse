@@ -17,16 +17,18 @@ function LandingPage() {
         <div className='LandingPageContainer'>
             <TopHeader/>
             <LeftSideContainer/>
-            <Routes>
-                <Route path='/' element={<Home/>}/>
-                <Route path='/playlists' element={<Home />}/>
-                <Route path='/albums' element={<Home />}/>
-                <Route path='/createAlbum' element={<CreateAlbumPage/>}/>
-                <Route path='/createPlaylist' element={<CreatePlaylistPage/>}/>
-                <Route path="/album/:albumId" element={<AlbumDetailsPage/>} />
-                <Route path="/artist/:artistId" element={<ArtistDetailsPage/>} />
-                <Route path="/playlist/:playlistId" element={<PlaylistDetailsPage/>} />
-            </Routes>
+            <main className="mainSection">
+                <Routes>
+                    <Route path='/' element={<Home/>}/>
+                    <Route path='/playlists' element={<Home />}/>
+                    <Route path='/albums' element={<Home />}/>
+                    <Route path='/createAlbum' element={<CreateAlbumPage/>}/>
+                    <Route path='/createPlaylist' element={<CreatePlaylistPage/>}/>
+                    <Route path="/album/:albumId" element={<AlbumDetailsPage/>} />
+                    <Route path="/artist/:artistId" element={<ArtistDetailsPage/>} />
+                    <Route path="/playlist/:playlistId" element={<PlaylistDetailsPage/>} />
+                </Routes>
+            </main>
             <Playbar />
             <ToastContainer/>
         </div>
