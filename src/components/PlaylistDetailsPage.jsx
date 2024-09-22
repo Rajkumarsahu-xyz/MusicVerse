@@ -239,7 +239,7 @@ const PlaylistDetailsPage = () => {
   return (
     <div className='playlistDetailsContainer'>
       <div className='playlistDetailSongs'>
-        <h1>{playlist.title} - {playlist.createdBy.username}</h1>
+        <h1>{playlist.title} &ensp; - &ensp; {playlist.createdBy.username}</h1>
         <div className="addSongsToPlaylist">
           <h3>Add Songs To The Playlist</h3>
           <div className="songsList">

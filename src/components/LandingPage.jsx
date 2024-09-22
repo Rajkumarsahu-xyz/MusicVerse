@@ -11,6 +11,7 @@ import LeftSideContainer from './LeftSideContainer';
 import PlaylistDetailsPage from './PlaylistDetailsPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
+import LikedSongsPage from './LikedSongsPage';
 
 function LandingPage() {
     return (
@@ -22,6 +23,7 @@ function LandingPage() {
                     <Route path='/' element={<Home/>}/>
                     <Route path='/playlists' element={<Home />}/>
                     <Route path='/albums' element={<Home />}/>
+                    <Route path='/liked-songs' element={<LikedSongsPage />}/>
                     <Route path='/createAlbum' element={<CreateAlbumPage/>}/>
                     <Route path='/createPlaylist' element={<CreatePlaylistPage/>}/>
                     <Route path="/album/:albumId" element={<AlbumDetailsPage/>} />
