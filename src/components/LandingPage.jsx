@@ -23,6 +23,7 @@ function LandingPage() {
                     <Route path='/' element={<Home/>}/>
                     <Route path='/playlists' element={<Home />}/>
                     <Route path='/albums' element={<Home />}/>
+                    <Route path='/artists' element={<Home />}/>
                     <Route path='/liked-songs' element={<LikedSongsPage />}/>
                     <Route path='/createAlbum' element={<CreateAlbumPage/>}/>
                     <Route path='/createPlaylist' element={<CreatePlaylistPage/>}/>

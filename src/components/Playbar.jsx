@@ -5,6 +5,7 @@ import { usePlayback } from './../PlaybackContext';
 import Like from '../Like';
 import { auth, db } from '../Firebase';
 import { addDoc, collection, deleteDoc, getDocs, query, where } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 
 function Playbar() {
   const { isPlaying, currentAudioUrl, currentSong, playPauseToggle, currentTime, setCurrentTime } = usePlayback();
@@ -40,6 +41,7 @@ function Playbar() {
           setIsLoading(false);
         });
     } else {
+      setIsLiked(false);
       setIsLoading(false);
     }
 
@@ -83,6 +85,18 @@ function Playbar() {
         .catch((error) => {
           console.error('Error checking likes:', error);
         });
+    }
+
+    else {
+      console.log("User is not signed in");
+      toast.error('Sign in to Like a song.', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
   

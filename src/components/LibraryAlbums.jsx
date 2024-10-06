@@ -31,7 +31,7 @@ function LibraryAlbums() {
 
   return (
     (userAlbums.length > 0) ? (
-      <div className="libraryPlaylistsContainer">
+      <div className="libraryAlbumsContainer">
         {userAlbums.map((album, index) => (
           <p key={index} onClick={() => albumClickHandler(album.id)}>
             {album.title}
