@@ -1,6 +1,4 @@
 import React from 'react';
-// import { BsMusicNoteList } from "react-icons/bs";
-import { FcMusic } from "react-icons/fc";
 import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import SignInOut from '../SignInOut';
@@ -29,9 +27,7 @@ function TopHeader() {
                 <MdArrowForwardIos className="arrowheads" onClick={goForward}/>
             </div>
             <div className='logo'>
-                {/* <BsMusicNoteList className='spotifyLogo' onClick={handleLogoClick}/> */}
-                <FcMusic className='spotifyLogo' onClick={handleLogoClick}/>
-                <h1 onClick={handleLogoClick}>MusicVerse</h1>
+                <img src={"/assets/musicverse_logo.png"} alt="MusicVerse Logo" className='mainLogo' onClick={handleLogoClick}/> 
             </div>
             <SignInOut/>
             <div className='loginMsg'>

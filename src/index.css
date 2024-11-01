@@ -58,23 +58,20 @@ code {
   display: flex;
 }
 
-.spotifyLogo {
+.mainLogo {
   color: #fff;
-  font-size: 2.2rem;
+  width: 19rem;
+  height: 4rem;
   border: none;
-  margin: 0.75vh 0.75vw;
+  margin: 0.5vh 0.5vw;
   align-self: center;
   cursor: pointer;
 }
 
-.logo > h1 {
-  cursor: pointer;
-}
-
 .loginIcon {
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 700;
-  padding: 1.5vh 2vw;
+  padding: 1.5vh 1.5vw;
   margin-top: 2vh;
   border-radius: 3rem;
   color: whitesmoke;

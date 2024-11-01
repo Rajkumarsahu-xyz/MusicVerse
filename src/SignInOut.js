@@ -1,4 +1,6 @@
 import React from 'react';
+import { MdLogin } from "react-icons/md";
+import { MdLogout } from "react-icons/md";
 import { signInWithPopup, signOut } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, googleProvider } from './Firebase';
@@ -42,9 +44,9 @@ const SignInOut = () => {
   return (
     <div>
       {user ? (
-        <button className='loginIcon' onClick={handleSignOut}>Sign Out</button>
+          <button className='loginIcon' onClick={handleSignOut}>Sign Out <MdLogout /></button>
       ) : (
-        <button className='loginIcon'  onClick={handleGoogleSignIn}>Sign In</button>
+        <button className='loginIcon'  onClick={handleGoogleSignIn}>Sign In <MdLogin /></button>
       )}
     </div>
   );
