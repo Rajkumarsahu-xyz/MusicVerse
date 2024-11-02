@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { usePlayback } from '../PlaybackContext';
 import { FaPause, FaPlay } from 'react-icons/fa';
 import { db, storage, auth } from '../Firebase';
@@ -17,10 +17,13 @@ const AlbumDetailsPage = () => {
 
   const { isPlaying, currentSong, setCurrentSong, playPauseToggle } = usePlayback();
 
-  const handlePlayPause = (audioUrl, title, artist, imgUrl, songId, artistName) => {
-    setCurrentSong({ title, artist, imgUrl, songId, artistName });
-    playPauseToggle(audioUrl, title, artist, imgUrl, songId, artistName);
+  const handlePlayPause = (audioUrl, title, artistId, imgUrl, songId, artistName) => {
+    console.log(audioUrl, title, artistId, imgUrl, songId, artistName);
+    setCurrentSong({ title, artistId, imgUrl, songId, artistName });
+    playPauseToggle(audioUrl, title, artistId, imgUrl, songId, artistName);
   };
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAlbumDetails = async () => {
@@ -132,6 +135,10 @@ const AlbumDetailsPage = () => {
     setSongGenre('');
     setSongTagName('');
   };
+
+  const handleArtistClick = () => {
+    navigate(`/artist/${album.artist_id}`);
+  };
   
   if (!album) {
     return <div>Loading...</div>;
@@ -141,7 +148,11 @@ const AlbumDetailsPage = () => {
 
   return (
     <div className='albumDetailsContainer'>
-      <h1>{album.title} &ensp; - &ensp; {album.artistName}</h1>
+      <h1>{album.title} &ensp; - &ensp; 
+      <span className='artistName' onClick={handleArtistClick}>
+          {album.artistName}
+        </span>
+      </h1>
       <img src={album.coverImageUrl} alt={album.title} />
 
       {isAlbumCreator && (
@@ -171,7 +182,7 @@ const AlbumDetailsPage = () => {
                 <h3>{song.name}</h3>
                 <button
                   onClick={() =>
-                    handlePlayPause(song.audioUrl, song.name, song.artist, album.coverImageUrl, song.id, album.artistName)
+                    handlePlayPause(song.audioUrl, song.name, album.artist_id, album.coverImageUrl, song.id, album.artistName)
                   }
                 >
                   {(isPlaying && currentSong.songId === song.id) ? <FaPause /> : <FaPlay />}

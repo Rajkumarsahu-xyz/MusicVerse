@@ -195,6 +195,14 @@ button:hover {
   background-color: #81357d;
 }
 
+.artistName {
+  cursor: pointer;
+}
+
+.artistName:hover {
+  text-decoration: underline;
+}
+
 .albumDetailsContainer > img {
   width: 30vw;
   height: 70vh;
@@ -375,6 +383,11 @@ option {
 
 .albumCardsForArtist > div {
   margin: auto;
+}
+
+.albumCardsForArtist > div > h2:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .createPlaylistContainer {

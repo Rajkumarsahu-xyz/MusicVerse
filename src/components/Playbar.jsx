@@ -6,6 +6,7 @@ import Like from '../Like';
 import { auth, db } from '../Firebase';
 import { addDoc, collection, deleteDoc, getDocs, query, where } from 'firebase/firestore';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 function Playbar() {
   const { isPlaying, currentAudioUrl, currentSong, playPauseToggle, currentTime, setCurrentTime } = usePlayback();
@@ -15,6 +16,8 @@ function Playbar() {
   const user = auth.currentUser;
   const audioRef = useRef(null);
   const progressBarRef = useRef(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
 
@@ -131,6 +134,10 @@ function Playbar() {
     setDuration(audioRef.current.duration);
   };
 
+  const handleArtistClick = () => {
+    console.log(currentSong.artistId);
+    navigate(`/artist/${currentSong.artistId}`);
+  };
 
   return (
     <div className='playbarContainer'>
@@ -140,7 +147,9 @@ function Playbar() {
             <img src={currentSong.imgUrl} alt='Album Cover' className='currentPlayingSongImage'/>
             <div className='songNameNArtist'>
               <h3>{currentSong.title}</h3>
-              <p>{currentSong.artistName}</p>
+              <p className='artistName' onClick={handleArtistClick}>
+                {currentSong.artistName}
+              </p>
             </div>
           </div>
         }
