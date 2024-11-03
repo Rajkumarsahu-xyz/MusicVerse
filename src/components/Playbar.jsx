@@ -127,7 +127,7 @@ function Playbar() {
         return;
       }
       console.log(currentSong.artistId);
-      playPauseToggle(currentAudioUrl, currentSong.title, currentSong.artistId, currentSong.imgUrl, currentSong.songId, currentSong.artistName, currentTime);
+      playPauseToggle(currentAudioUrl, currentSong.title, currentSong.artistId, currentSong.imgUrl, currentSong.songId, currentSong.artistName, currentSong.genre, currentSong.tags, currentTime);
   };
 
   const handleTimeUpdate = () => {
@@ -135,7 +135,7 @@ function Playbar() {
   };
 
   const handleArtistClick = () => {
-    console.log(currentSong.artistId);
+    console.log(currentSong);
     navigate(`/artist/${currentSong.artistId}`);
   };
 
@@ -171,6 +171,15 @@ function Playbar() {
           </div>
           <span className="duration">{(duration) ? formatTime(duration) : formatTime(0)}</span>
         </div>
+      </div>
+
+      <div className="genreAndtags" >
+        {isPlaying && 
+         <div>
+            <p>Genre &ensp; - &ensp; {currentSong.genre}</p>
+            <p>Tags &ensp; &ensp; - &ensp; {currentSong.tags}</p> 
+         </div>
+        }
       </div>
     </div>
   );

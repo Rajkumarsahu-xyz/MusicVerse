@@ -345,6 +345,10 @@ option {
   width: 40vw;
 }
 
+.genreAndtags {
+  text-align: left;
+}
+
 .artistDetailsContainer {
   width: 50vw;
   margin: auto;
