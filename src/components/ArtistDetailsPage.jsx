@@ -70,7 +70,20 @@ const ArtistDetailsPage = () => {
     if (!user) {
       console.log("User is not signed in");
       // navigate("/");
-      toast.error('Sign in to follow an artist.', {
+      toast.error('Sign in to Follow an artist.', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      return;
+    }
+
+    if(user.uid === artist.id) {
+      console.log("Artist is signedin and tries to follow himself");
+      toast.error('You cannot Follow yourself.', {
         position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
@@ -88,7 +101,7 @@ const ArtistDetailsPage = () => {
     if(!user) {
       console.log("User is not signed in");
       // navigate("/");
-      toast.error('Sign in to unfollow an artist.', {
+      toast.error('Sign in to Unfollow an artist.', {
         position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,

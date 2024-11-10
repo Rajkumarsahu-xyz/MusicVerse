@@ -17,10 +17,10 @@ const AlbumDetailsPage = () => {
 
   const { isPlaying, currentSong, setCurrentSong, playPauseToggle } = usePlayback();
 
-  const handlePlayPause = (audioUrl, title, artistId, imgUrl, songId, artistName, genre, tags) => {
-    console.log(audioUrl, title, artistId, imgUrl, songId, artistName, genre, tags);
-    setCurrentSong({ title, artistId, imgUrl, songId, artistName, genre, tags });
-    playPauseToggle(audioUrl, title, artistId, imgUrl, songId, artistName, genre, tags);
+  const handlePlayPause = (audioUrl, title, artistId, imgUrl, songId, artistName, genre, tags, albumId, albumName) => {
+    console.log(audioUrl, title, artistId, imgUrl, songId, artistName, genre, tags, albumId, albumName);
+    setCurrentSong({ title, artistId, imgUrl, songId, artistName, genre, tags, albumId, albumName });
+    playPauseToggle(audioUrl, title, artistId, imgUrl, songId, artistName, genre, tags, albumId, albumName);
   };
 
   const navigate = useNavigate();
@@ -182,7 +182,7 @@ const AlbumDetailsPage = () => {
                 <h3>{song.name}</h3>
                 <button
                   onClick={() =>
-                    handlePlayPause(song.audioUrl, song.name, album.artist_id, album.coverImageUrl, song.id, album.artistName, song.genre, song.tags)
+                    handlePlayPause(song.audioUrl, song.name, album.artist_id, album.coverImageUrl, song.id, album.artistName, song.genre, song.tags, album.id, album.title)
                   }
                 >
                   {(isPlaying && currentSong.songId === song.id) ? <FaPause /> : <FaPlay />}

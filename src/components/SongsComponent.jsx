@@ -8,9 +8,9 @@ const SongsComponent = () => {
   const { isPlaying, currentSong, setCurrentSong, playPauseToggle } = usePlayback();
   const [songs, setSongs] = useState([]);
 
-  const togglePlay = (audioUrl, title, artistId, imgUrl, songId, artistName, genre, tags) => {
-    setCurrentSong({ title, artistId, imgUrl, songId, artistName, genre, tags });
-    playPauseToggle(audioUrl, title, artistId, imgUrl, songId, artistName, genre, tags);
+  const togglePlay = (audioUrl, title, artistId, imgUrl, songId, artistName, genre, tags, albumId, albumName) => {
+    setCurrentSong({ title, artistId, imgUrl, songId, artistName, genre, tags, albumId, albumName });
+    playPauseToggle(audioUrl, title, artistId, imgUrl, songId, artistName, genre, tags, albumId, albumName);
     console.log(currentSong);
   };
 
@@ -35,6 +35,7 @@ const SongsComponent = () => {
             return {
               ...song,
               imgUrl: albumData?.coverImageUrl || '', 
+              albumName: albumData?.title || '', 
             };
           })
         );
@@ -72,7 +73,7 @@ const SongsComponent = () => {
           <div key={index} className='songCard'>
             <img src={song.imgUrl} alt={`Song ${index + 1}`} />
             <h4>{song.title}</h4>
-            <div onClick={() => togglePlay(song.audioUrl, song.title, song.artist_id, song.imgUrl, song.id, song.artistName, song.genre, song.tags)}>
+            <div onClick={() => togglePlay(song.audioUrl, song.title, song.artist_id, song.imgUrl, song.id, song.artistName, song.genre, song.tags, song.album_id, song.albumName)}>
               {(isPlaying && currentSong.songId === song.id) ? <FaPause className="playPauseButton"/> : <FaPlay className="playPauseButton"/>}
             </div>
           </div>

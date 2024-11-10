@@ -8,7 +8,7 @@ export const PlaybackProvider = ({ children }) => {
   const [currentSong, setCurrentSong] = useState(null);
   const [currentTime, setCurrentTime] = useState(0);
 
-  const playPauseToggle = (audioUrl, title, artistId, imgUrl, songId, artistName, genre, tags, currentTime) => {
+  const playPauseToggle = (audioUrl, title, artistId, imgUrl, songId, artistName, genre, tags, albumId, albumName, currentTime) => {
     if (isPlaying && songId === currentSong?.songId) {
       setIsPlaying(false);
       setCurrentAudioUrl('');
@@ -18,7 +18,7 @@ export const PlaybackProvider = ({ children }) => {
     else {
       setIsPlaying(true);
       setCurrentAudioUrl(audioUrl);
-      setCurrentSong({ title, artistId, imgUrl, songId, artistName, genre, tags });
+      setCurrentSong({ title, artistId, imgUrl, songId, artistName, genre, tags, albumId, albumName });
       setCurrentTime(currentTime || 0);
     }
   };

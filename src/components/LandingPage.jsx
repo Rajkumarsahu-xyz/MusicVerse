@@ -12,6 +12,7 @@ import PlaylistDetailsPage from './PlaylistDetailsPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
 import LikedSongsPage from './LikedSongsPage';
+import RightSideContainer from './RightSideContainer';
 
 function LandingPage() {
     return (
@@ -34,6 +35,7 @@ function LandingPage() {
             </main>
             <Playbar />
             <ToastContainer/>
+            <RightSideContainer/>
         </div>
     );
 }
