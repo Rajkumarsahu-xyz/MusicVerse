@@ -5,6 +5,7 @@ import { FaPause, FaPlay } from 'react-icons/fa';
 import { db, storage, auth } from '../Firebase';
 import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import Loader from '../Loader';
 
 const AlbumDetailsPage = () => {
   const { albumId } = useParams();
@@ -14,6 +15,7 @@ const AlbumDetailsPage = () => {
   const [songGenre, setSongGenre] = useState('');
   const [songTagName, setSongTagName] = useState('');
   const [currentUserId, setCurrentUserId] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const { isPlaying, currentSong, setCurrentSong, playPauseToggle } = usePlayback();
 
@@ -31,23 +33,29 @@ const AlbumDetailsPage = () => {
       const albumDoc = await getDoc(albumDocRef);
       const albumData = albumDoc.data();
 
-      const artistsRef = collection(db, "artists");
-
-      const artistDocRef = doc(artistsRef, albumData.artist_id);
-      const artistDocSnapshot = await getDoc(artistDocRef);
-
-      const artistData = artistDocSnapshot.data();
-      console.log(artistData);
-
-      if (albumDoc.exists()) {
-        setAlbum({ id: albumDoc.id, artistName: artistData.name, ...albumDoc.data() });
-      } else {
-        console.error('Album not found');
+      if(albumData) {
+        const artistsRef = collection(db, "artists");
+        const artistDocRef = doc(artistsRef, albumData.artist_id);
+        const artistDocSnapshot = await getDoc(artistDocRef);
+  
+        const artistData = artistDocSnapshot.data();
+        console.log(artistData);
+  
+        if (albumDoc.exists()) {
+          setAlbum({ id: albumDoc.id, artistName: artistData.name, ...albumDoc.data() });
+        } else {
+          console.error('Album not found');
+        }
       }
     };
 
     fetchAlbumDetails();
-    
+
+    const delay = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(delay);
   }, [albumId]);
 
   useEffect(() => {
@@ -139,9 +147,25 @@ const AlbumDetailsPage = () => {
   const handleArtistClick = () => {
     navigate(`/artist/${album.artist_id}`);
   };
+
+  if (!album && loading) {
+    return (
+      <div className="albumDetailsContainer">
+        <Loader />
+      </div>
+    );
+  }
   
-  if (!album) {
-    return <div>Loading...</div>;
+  if (!album && !loading) {
+    return (
+      <div className='albumDetailsContainer'>
+        <Loader />
+        <div className='albumNotAvailableContainer'>
+          <h2>Sorry !</h2>
+          <h3>The Album you're looking for is not Available.</h3>
+        </div>
+      </div>
+    );
   }
 
   const isAlbumCreator = album.artist_id === currentUserId;

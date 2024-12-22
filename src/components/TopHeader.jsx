@@ -2,11 +2,9 @@ import React from 'react';
 import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import SignInOut from '../SignInOut';
-import { auth } from '../Firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { Tooltip } from 'react-tooltip';
 
 function TopHeader() {
-    const [user] = useAuthState(auth);
     const navigate = useNavigate();
     const handleLogoClick = () => {
         navigate('/');
@@ -23,16 +21,14 @@ function TopHeader() {
     return (
         <div className='topHeaderContainer'>
             <div>
-                <MdArrowBackIosNew className="arrowheads" onClick={goBack}/>
-                <MdArrowForwardIos className="arrowheads" onClick={goForward}/>
+                <MdArrowBackIosNew className="arrowheads" onClick={goBack} data-tooltip-id="my-tooltip" data-tooltip-content="Go Back" data-tooltip-place="bottom"/>
+                <MdArrowForwardIos className="arrowheads" onClick={goForward} data-tooltip-id="my-tooltip" data-tooltip-content="Go Forward" data-tooltip-place="bottom"/>
+                <Tooltip id="my-tooltip" />
             </div>
             <div className='logo'>
                 <img src={"/assets/musicverse_logo.png"} alt="MusicVerse Logo" className='mainLogo' onClick={handleLogoClick}/> 
             </div>
             <SignInOut/>
-            <div className='loginMsg'>
-                {user && <h1>Welcome, {user.displayName || 'User'}!</h1>}
-            </div>
         </div>
     );
 }

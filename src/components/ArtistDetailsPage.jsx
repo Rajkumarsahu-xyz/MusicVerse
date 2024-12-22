@@ -6,6 +6,7 @@ import { doc, getDoc, updateDoc, arrayUnion, arrayRemove, deleteField, setDoc, c
 import { TiPlus } from "react-icons/ti";
 import { GiCheckMark } from "react-icons/gi";
 import { toast } from 'react-toastify';
+import Loader from '../Loader';
 
 
 const ArtistDetailsPage = () => {
@@ -15,6 +16,7 @@ const ArtistDetailsPage = () => {
   const [showNotificationPopup, setShowNotificationPopup] = useState(false);
   const [showUnfollowPopup, setShowUnfollowPopup] = useState(false); // For unfollow
   const user = auth.currentUser; // null if not signed in
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -58,6 +60,12 @@ const ArtistDetailsPage = () => {
     };
 
     fetchArtistDetails();
+
+    const delay = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(delay);
   }, [artistId, user]);
 
   // Handle album click
@@ -185,8 +193,24 @@ const ArtistDetailsPage = () => {
     }
   };
 
-  if (!artist) {
-    return <div>Loading...</div>;
+  if (!artist && loading) {
+    return (
+      <div className="artistDetailsContainer">
+        <Loader />
+      </div>
+    );
+  }
+  
+  if (!artist && !loading) {
+    return (
+      <div className='artistDetailsContainer'>
+        <Loader />
+        <div className='artistNotAvailableContainer'>
+          <h2>Sorry !</h2>
+          <h3>The Artist you're looking for is not Available.</h3>
+        </div>
+      </div>
+    );
   }
 
   return (

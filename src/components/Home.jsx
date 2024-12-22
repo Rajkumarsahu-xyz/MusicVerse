@@ -6,7 +6,8 @@ import AlbumsComponent from './AlbumsComponent';
 function Home() {
     return (
         <div className='homeContainer'>
-            <h1>Discover</h1>
+            <h3>MusicVerse, Where Passion Meets Rhythm.</h3>
+            <h3>Explore | Create | Celebrate</h3>
             <SongsComponent/>
             <ArtistsComponent/>
             <AlbumsComponent/>

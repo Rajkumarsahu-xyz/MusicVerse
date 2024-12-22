@@ -14,7 +14,10 @@ const Loader = ({ children }) => {
   return (
     <div>
       {loading ? (
-        <span className='loader'></span>
+        <div>
+          <span className='loader'></span>
+          <img src={"/loader_image.png"} alt="Static Icon" className="loader-image" />
+        </div>
       ) : (
         children
       )}

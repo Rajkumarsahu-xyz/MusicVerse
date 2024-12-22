@@ -9,6 +9,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { app } from './../Firebase';
 import Loader from "../Loader";
 import { toast } from "react-toastify";
+import { Tooltip } from 'react-tooltip';
 
 const auth = getAuth(app);
 
@@ -86,7 +87,8 @@ function YourLibrary() {
         <VscLibrary className="libraryIcon" />
         <h2>Your Library</h2>
         <div onClick={() => setShowDropdown(!showDropdown)}>
-          <IoMdAdd className="create-Btn" />
+          <IoMdAdd className="create-Btn" data-tooltip-id="my-tooltip" data-tooltip-content="Create Album / Playlist" data-tooltip-place="top"/>
+          <Tooltip id="my-tooltip" />
         </div>
         {showDropdown && (
           <div className="dropdown-content">
@@ -112,10 +114,12 @@ function YourLibrary() {
           <Route path={"/playlists"} element={<Loader><LibraryPlaylists /></Loader>} />
           <Route path={"/albums"} element={<Loader><LibraryAlbums /></Loader>} />
           <Route path={"/artists"} element={<Loader><LibraryArtists /></Loader>} /> {/* Route for LibraryArtists */}
+          <Route path='/liked-songs' element={<Loader><LibraryPlaylists /></Loader>}/>
           <Route path={"/createAlbum"} element={<Loader><LibraryPlaylists /></Loader>} />
           <Route path={"/createPlaylist"} element={<Loader><LibraryPlaylists /></Loader>} />
           <Route path="/album/:albumId" element={<Loader><LibraryAlbums/></Loader>} />
           <Route path="/playlist/:playlistId" element={<Loader><LibraryPlaylists/></Loader>} />
+          <Route path="/artist/:artistId" element={<Loader><LibraryArtists/></Loader>} />
         </Routes>
       ) : (
         <p>Please sign in to view your library.</p>
