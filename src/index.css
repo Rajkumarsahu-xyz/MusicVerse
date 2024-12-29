@@ -100,6 +100,10 @@ code {
   background-color: #b53186;
 }
 
+.logoutIcon > h1:hover {
+  cursor: pointer;
+}
+
 .loginMsg {
   text-align: center;
   width: 100%;
@@ -210,7 +214,7 @@ button:hover {
 
 .albumDetailsContainer {
   width: 50vw;
-  min-height: 62vh;
+  min-height: 67vh;
   margin: auto;
   padding: 2vh 1vw;
   padding-bottom: 20vh;
@@ -218,10 +222,15 @@ button:hover {
 }
 
 .albumNotAvailableContainer {
-  margin: 10vh 5vw;
+  margin: 10vh 5vw 5vh 5vw;
   padding: 2vh 1vw;
   background: linear-gradient(135deg, #b53186, #ad4aa8);
   border-radius: 1vw;
+}
+
+.pageNotFoundImage {
+  height: 40vh;
+  width: 12vw;
 }
 
 .artistName {
@@ -379,7 +388,7 @@ option {
 }
 
 .artistDetailsContainer {
-  min-height: 62vh;
+  min-height: 67vh;
   width: 50vw;
   margin: auto;
   padding: 2vh 1vw;
@@ -388,7 +397,7 @@ option {
 }
 
 .artistNotAvailableContainer {
-  margin: 10vh 5vw;
+  margin: 10vh 5vw 5vh 5vw;
   padding: 2vh 1vw;
   background: linear-gradient(135deg, #b53186, #ad4aa8);
   border-radius: 1vw;
@@ -588,12 +597,12 @@ option {
   padding: 2vh 1vw 20vh 1vw;
   background-color: #81357d;
   width: 50vw;
-  min-height: 62vh;
+  min-height: 67vh;
   margin: auto;
 }
 
 .playlistNotAvailableContainer {
-  margin: 10vh 5vw;
+  margin: 10vh 5vw 5vh 5vw;
   padding: 2vh 1vw;
   background: linear-gradient(135deg, #b53186, #ad4aa8);
   border-radius: 1vw;
@@ -675,12 +684,19 @@ option {
 }
 
 .likedSongsContainer {
-  padding: 2vh 1vw 0 1vw;
+  padding: 2vh 1vw 20vh 1vw;
   /* padding-bottom: 20vh; */
   background-color: #81357d;
   width: 50vw;
   margin: auto;
-  min-height: 90vh;
+  min-height: 67vh;
+}
+
+.likedSongsNotAvailableContainer {
+  margin: 10vh 5vw 5vh 5vw;
+  padding: 2vh 1vw;
+  background: linear-gradient(135deg, #b53186, #ad4aa8);
+  border-radius: 1vw;
 }
 
 .likedSongsPageSongsCard {
@@ -774,7 +790,7 @@ option {
 .loader-image {
   width: 85px; 
   height: 85px;
-  position: absolute;
+  position: fixed;
   left: 49.75vw;
   top: 30.4vh;
   transform: translate(-50%, -50%);

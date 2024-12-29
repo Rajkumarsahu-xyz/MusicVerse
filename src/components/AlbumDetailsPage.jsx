@@ -164,6 +164,9 @@ const AlbumDetailsPage = () => {
           <h2>Sorry !</h2>
           <h3>The Album you're looking for is not Available.</h3>
         </div>
+        <div className='pageNotFoundContainer'>
+          <img src={"/assets/page_not_found_image6.png"} alt="Page Not Found" className='pageNotFoundImage' />
+        </div>
       </div>
     );
   }

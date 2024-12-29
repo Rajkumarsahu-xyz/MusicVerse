@@ -16,7 +16,7 @@ const Loader = ({ children }) => {
       {loading ? (
         <div>
           <span className='loader'></span>
-          <img src={"/loader_image.png"} alt="Static Icon" className="loader-image" />
+          <img src={"/assets/loader_image.png"} alt="Static Icon" className="loader-image" />
         </div>
       ) : (
         children

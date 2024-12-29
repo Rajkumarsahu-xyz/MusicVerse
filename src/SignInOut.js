@@ -47,8 +47,8 @@ const SignInOut = () => {
   const getInitials = (name) => {
     const nameParts = name?.split(' ');
     const firstNameInitial = nameParts[0]?.charAt(0).toUpperCase();
-    const secondNameInitial = nameParts[1]?.charAt(0).toUpperCase();
-    return secondNameInitial ? `${firstNameInitial} ${secondNameInitial}` : firstNameInitial;
+    const secondNameInitial = nameParts[1]?.charAt(0).toUpperCase() || firstNameInitial;
+    return `${firstNameInitial} ${secondNameInitial}`;
   };
 
   useEffect(() => {
