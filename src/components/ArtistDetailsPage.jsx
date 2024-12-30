@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { db, auth } from '../Firebase';
 import { doc, getDoc, updateDoc, arrayUnion, arrayRemove, deleteField, setDoc, collection } from 'firebase/firestore';
 // import { RiUserFollowLine, RiUserUnfollowLine } from 'react-icons/ri';
@@ -208,6 +208,7 @@ const ArtistDetailsPage = () => {
         <div className='artistNotAvailableContainer'>
           <h2>Sorry !</h2>
           <h3>The Artist you're looking for is not Available.</h3>
+          <Link to="/" className="home-link">Go back to Home</Link>
         </div>
         <div className='pageNotFoundContainer'>
           <img src={"/assets/page_not_found_image6.png"} alt="Page Not Found" className='pageNotFoundImage' />

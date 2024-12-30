@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getFirestore, doc, getDoc, updateDoc, arrayUnion, collection, getDocs } from 'firebase/firestore';
 import { app, db } from '../Firebase';
 import { usePlayback } from '../PlaybackContext';
@@ -122,6 +122,7 @@ const PlaylistDetailsPage = () => {
         <div className='playlistNotAvailableContainer'>
           <h2>Sorry !</h2>
           <h3>The Playlist you're looking for is not Available.</h3>
+          <Link to="/" className="home-link">Go back to Home</Link>
         </div>
         <div className='pageNotFoundContainer'>
           <img src={"/assets/page_not_found_image6.png"} alt="Page Not Found" className='pageNotFoundImage' />

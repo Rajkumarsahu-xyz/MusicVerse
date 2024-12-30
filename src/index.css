@@ -915,3 +915,29 @@ option {
   cursor: pointer;
   margin: 1vh 1vw 0 1vw;
 }
+
+.pnf_404_container {
+  min-height: 67vh;
+  width: 50vw;
+  margin: auto;
+  padding: 2vh 1vw;
+  padding-bottom: 20vh;
+  background-color: #81357d;
+}
+
+.pnf_404_image {
+  display: block;
+  margin: auto;
+  height: 66vh;
+  width: 31vw;
+}
+
+.home-link {
+  font-size: 1.3rem;
+  color: #fff;
+  text-decoration: none;
+}
+
+.home-link:hover {
+  text-decoration: underline;
+}

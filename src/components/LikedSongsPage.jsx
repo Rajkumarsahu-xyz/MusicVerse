@@ -5,6 +5,7 @@ import { auth } from '../Firebase';
 import { FaPause, FaPlay } from 'react-icons/fa';
 import Loader from '../Loader';
 import { onAuthStateChanged } from 'firebase/auth';
+import { Link } from 'react-router-dom';
 
 const LikedSongsPage = () => {
   const [likedSongs, setLikedSongs] = useState([]);
@@ -87,6 +88,7 @@ const LikedSongsPage = () => {
         <div className='likedSongsNotAvailableContainer'>
           <h2>Sorry !</h2>
           <h3>The Liked Songs you're looking for is not Available.</h3>
+          <Link to="/" className="home-link">Go back to Home</Link>
         </div>
         <div className='pageNotFoundContainer'>
           <img src={"/assets/page_not_found_image6.png"} alt="Page Not Found" className='pageNotFoundImage' />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { usePlayback } from '../PlaybackContext';
 import { FaPause, FaPlay } from 'react-icons/fa';
 import { db, storage, auth } from '../Firebase';
@@ -163,6 +163,7 @@ const AlbumDetailsPage = () => {
         <div className='albumNotAvailableContainer'>
           <h2>Sorry !</h2>
           <h3>The Album you're looking for is not Available.</h3>
+          <Link to="/" className="home-link">Go back to Home</Link>
         </div>
         <div className='pageNotFoundContainer'>
           <img src={"/assets/page_not_found_image6.png"} alt="Page Not Found" className='pageNotFoundImage' />

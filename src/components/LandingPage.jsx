@@ -13,6 +13,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
 import LikedSongsPage from './LikedSongsPage';
 import RightSideContainer from './RightSideContainer';
+import NotFound from './404';
 
 function LandingPage() {
     return (
@@ -31,6 +32,7 @@ function LandingPage() {
                     <Route path="/album/:albumId" element={<AlbumDetailsPage/>} />
                     <Route path="/artist/:artistId" element={<ArtistDetailsPage/>} />
                     <Route path="/playlist/:playlistId" element={<PlaylistDetailsPage/>} />
+                    <Route path="*" element={<NotFound />} /> {/* Catch-all route */}
                 </Routes>
             </main>
             <Playbar />

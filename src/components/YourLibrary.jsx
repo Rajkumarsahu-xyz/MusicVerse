@@ -113,13 +113,14 @@ function YourLibrary() {
           <Route path={"/"} element={<Loader><LibraryPlaylists /></Loader>} />
           <Route path={"/playlists"} element={<Loader><LibraryPlaylists /></Loader>} />
           <Route path={"/albums"} element={<Loader><LibraryAlbums /></Loader>} />
-          <Route path={"/artists"} element={<Loader><LibraryArtists /></Loader>} /> {/* Route for LibraryArtists */}
+          <Route path={"/artists"} element={<Loader><LibraryArtists /></Loader>} />
           <Route path='/liked-songs' element={<Loader><LibraryPlaylists /></Loader>}/>
-          <Route path={"/createAlbum"} element={<Loader><LibraryPlaylists /></Loader>} />
+          <Route path={"/createAlbum"} element={<Loader><LibraryAlbums /></Loader>} />
           <Route path={"/createPlaylist"} element={<Loader><LibraryPlaylists /></Loader>} />
           <Route path="/album/:albumId" element={<Loader><LibraryAlbums/></Loader>} />
           <Route path="/playlist/:playlistId" element={<Loader><LibraryPlaylists/></Loader>} />
           <Route path="/artist/:artistId" element={<Loader><LibraryArtists/></Loader>} />
+          <Route path="*" element={<Loader><LibraryPlaylists/></Loader>} />
         </Routes>
       ) : (
         <p>Please sign in to view your library.</p>
